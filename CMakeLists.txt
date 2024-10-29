@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-Werror -Og")
 
 include(FetchContent)
 
-find_package(CURL 7.81.0 EXACT REQUIRED)
+find_package(CURL REQUIRED)
 
 message("curl libs: ${CURL_LIBRARIES}")
 message("curl dirs: ${CURL_INCLUDE_DIRS}")

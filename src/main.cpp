@@ -10,10 +10,42 @@
 #include "test_suite.hpp"
 #include "score.hpp"
 #include "postman.hpp"
+#include "cmdline.h"
 
 using json = nlohmann::json;
 
 int main(int argc, char* argv[]){
+
+    cmdline::parser parser;
+
+    // '-s': read score file
+    parser.add<std::string>(
+            "score",            // 1st argument is long name
+            's',                // 2nd argument is short name
+            "score file",       // 3rd argument is description
+            true,               // 4th argument is mandatory
+            ""                  // 5th argument is default value
+    );
+
+    // '-c': read the config file
+    parser.add<std::string>(
+            "config",
+            'c',
+            "config of score file",
+            true,
+            ""
+    );
+
+    parser.add<std::string>(
+            "id",
+            'i',
+            "the student id",
+            true,
+            ""
+    );
+
+    parser.parse_check(argc, argv);
+
     if(argc < 2){
         spdlog::error("Need report file. Exit.");
         return -1;
@@ -29,15 +61,15 @@ int main(int argc, char* argv[]){
         return -1;
     }
 
-    std::string report_file = std::string(argv[1]);
+    std::string report_file = parser.get<std::string>("score");
 
     spdlog::info("Got Google report file. [{0}]", report_file);
 
-    std::string score_configuration_file = std::string(argv[2]);
+    std::string score_configuration_file = parser.get<std::string>("config");
 
     spdlog::info("Got score configuration file. [{0}]", score_configuration_file);
 
-    std::string student_id = std::string(argv[3]);
+    std::string student_id = parser.get<std::string>("id");
 
     spdlog::info("Got student ID: {0}", student_id);
 
