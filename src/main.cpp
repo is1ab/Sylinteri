@@ -122,4 +122,10 @@ int main(int argc, char* argv[]){
     spdlog::info(" - Grade: {0}", result);
 
     post_result(student_id, homework_name, semester, submitted_at, result);
+
+    if(result != 0){
+        return 1;
+    }
+    
+    return 0;
 }
