@@ -123,7 +123,7 @@ int main(int argc, char* argv[]){
 
     post_result(student_id, homework_name, semester, submitted_at, result);
 
-    if(result != 0){
+    if(result != 100){
         return 1;
     }
     
